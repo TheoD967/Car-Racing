@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     public void Load()
     {
-        Debug.Log("yo");
-        SceneManager.LoadScene("Race Track");
+        
+        SceneManager.LoadScene("Track Picker");
     }
 }
