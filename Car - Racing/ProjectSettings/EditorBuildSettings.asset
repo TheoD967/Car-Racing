@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Race Track.unity
+    guid: 7f7f5e86d82537b4290e976fac070d9c
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: ea238cf0fb039264abfe9058b7435147
+  - enabled: 1
+    path: Assets/Scenes/Track Picker.unity
+    guid: 6abd2e3e51fc9be4894882e25871fd79
   m_configObjects: {}
