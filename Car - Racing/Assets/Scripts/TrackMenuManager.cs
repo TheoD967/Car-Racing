@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class TrackMenuManager : MonoBehaviour
 {
-    public List<GameObject> tracks = new List<GameObject>();
 
     public static int track;
 
