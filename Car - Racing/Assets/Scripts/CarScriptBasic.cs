@@ -41,7 +41,6 @@ public class CarScriptBasic : MonoBehaviour
         float currentMotorTorque = Mathf.Lerp(motorForce, 0, speedFactor);
         
 
-        Debug.Log(verticalInput * motorForce);
         isBreaking = Input.GetKey(KeyCode.Space);
 
         currentbreakForce = isBreaking ? breakForce : 0f;

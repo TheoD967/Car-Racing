@@ -16,14 +16,28 @@ public class RedCarScriptBasic : MonoBehaviour
     public Quaternion quaternion;
     public Rigidbody rigidBody;
     private float backwards = 1;
-
+    public float laps = 1;
+    private bool finalCheck = false;
 
     // Start is called before the first frame update
     void Start()
     {
 
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name);
+        if (other.name == "lap counter" && finalCheck == true)
+        {
+            laps ++ ;
+            Debug.Log(laps);
+            finalCheck = false;
+        }
+        if (other.name == "final checkpoint")
+        {
+            finalCheck = true;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -43,7 +57,7 @@ public class RedCarScriptBasic : MonoBehaviour
         float currentMotorTorque = Mathf.Lerp(motorForce, 0, speedFactor);
 
 
-        Debug.Log(verticalInput * motorForce);
+        
         isBreaking = Input.GetKey(KeyCode.Space);
 
         if (forwardSpeed > 5 && verticalInput > 0)
