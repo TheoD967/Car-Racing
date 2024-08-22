@@ -18,6 +18,8 @@ public class RedCarScriptBasic : MonoBehaviour
     private float backwards = 1;
     public float laps = 1;
     private bool finalCheck = false;
+    private float Starttime;
+    private float ElapsedTime;
 
     // Start is called before the first frame update
     void Start()
@@ -27,9 +29,21 @@ public class RedCarScriptBasic : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.name);
-        if (other.name == "lap counter" && finalCheck == true)
+        if (other.name == "lap counter")
         {
-            laps ++ ;
+            laps++;
+            if (laps ==0) {
+                Starttime = Time.time;
+                Debug.Log(Starttime);
+                Debug.Log(TrackMenuManager.Laps + 1);
+               
+            }
+            
+            if (laps == (TrackMenuManager.Laps+1)) {
+                ElapsedTime = Time.time - Starttime;
+                Debug.Log(ElapsedTime);
+            }    
+            
             Debug.Log(laps);
             finalCheck = false;
         }
@@ -60,7 +74,7 @@ public class RedCarScriptBasic : MonoBehaviour
         
         isBreaking = Input.GetKey(KeyCode.Space);
 
-        if (forwardSpeed > 5 && verticalInput > 0)
+        if (forwardSpeed > 1 && verticalInput > 0)
         {
             isBreaking = true;
             backwards = 0;
