@@ -10,6 +10,7 @@ public class TrackMenuManager : MonoBehaviour
     public static int Laps = 1;
     public static int track;
     public TMP_Text lapsDisplay;
+    public static bool isReverse = false;
 
 
 
@@ -30,5 +31,10 @@ public class TrackMenuManager : MonoBehaviour
         }
         Debug.Log(Laps);
         lapsDisplay.text = Laps.ToString();
+    }
+
+    public void Reverse(bool reverseBtn)
+    {
+        isReverse = reverseBtn;
     }
 }

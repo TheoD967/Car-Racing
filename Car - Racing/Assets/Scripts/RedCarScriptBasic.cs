@@ -24,7 +24,11 @@ public class RedCarScriptBasic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        if (TrackMenuManager.isReverse == true)
+        {
+            Quaternion newRotaion = rigidBody.rotation* Quaternion.Euler(0f, 180f, 0f); ;
+            rigidBody.MoveRotation(newRotaion);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -32,11 +36,15 @@ public class RedCarScriptBasic : MonoBehaviour
         if (other.name == "lap counter")
         {
             laps++;
-            if (laps ==0) {
+            if (laps == 0) {
                 Starttime = Time.time;
                 Debug.Log(Starttime);
                 Debug.Log(TrackMenuManager.Laps + 1);
-               
+
+            }
+            else { 
+                if (finalCheck == true)
+                    Debug.Log(TrackMenuManager.Laps + 1);
             }
             
             if (laps == (TrackMenuManager.Laps+1)) {
