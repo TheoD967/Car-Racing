@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
 
 public class RedCarScriptBasic : MonoBehaviour
 {
@@ -10,13 +12,16 @@ public class RedCarScriptBasic : MonoBehaviour
     private bool isBreaking;
     [SerializeField] private float motorForce;
     [SerializeField] private float breakForce;
+    public TMP_Text lapCountText;
 
     [SerializeField] public WheelCollider frontLeftWheelCollider, frontRightWheelCollider;
     public float maxSpeed = 80;
+    public TMP_Text speedDisplay;
+    private float speed;
     public Quaternion quaternion;
     public Rigidbody rigidBody;
     private float backwards = 1;
-    public float laps = 1;
+    private float laps = 0;
     private bool finalCheck = false;
     private float Starttime;
     private float ElapsedTime;
@@ -29,31 +34,34 @@ public class RedCarScriptBasic : MonoBehaviour
             Quaternion newRotaion = rigidBody.rotation* Quaternion.Euler(0f, 180f, 0f); ;
             rigidBody.MoveRotation(newRotaion);
         }
+        
+
     }
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.name);
         if (other.name == "lap counter")
         {
-            laps++;
+            
             if (laps == 0) {
                 Starttime = Time.time;
-                Debug.Log(Starttime);
-                Debug.Log(TrackMenuManager.Laps + 1);
 
             }
             else { 
                 if (finalCheck == true)
-                    Debug.Log(TrackMenuManager.Laps + 1);
+                laps++;
+                Debug.Log(TrackMenuManager.Laps + 1);
             }
             
             if (laps == (TrackMenuManager.Laps+1)) {
                 ElapsedTime = Time.time - Starttime;
                 Debug.Log(ElapsedTime);
+                laps++;
             }    
             
             Debug.Log(laps);
             finalCheck = false;
+            lapCountText.text = laps + "/" + TrackMenuManager.Laps;
         }
         if (other.name == "final checkpoint")
         {
@@ -69,6 +77,9 @@ public class RedCarScriptBasic : MonoBehaviour
 
         float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.velocity);
 
+        speed = (float)Math.Round(forwardSpeed * (float)3.6);
+
+        speedDisplay.text = speed.ToString();
 
         // Calculate how close the car is to top speed
         // as a number from zero to one
