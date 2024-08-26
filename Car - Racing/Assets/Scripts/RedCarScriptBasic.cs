@@ -77,7 +77,7 @@ public class RedCarScriptBasic : MonoBehaviour
 
         float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.velocity);
 
-        speed = (float)Math.Round(forwardSpeed * (float)3.6);
+        speed = (float)Math.Round(rigidBody.velocity.magnitude * (float)3.6);
 
         speedDisplay.text = speed.ToString();
 
@@ -112,7 +112,7 @@ public class RedCarScriptBasic : MonoBehaviour
 
         // 
         float currentSteerAngle;
-        currentSteerAngle = 13 * horizontalInput;
+        currentSteerAngle = 14 * horizontalInput;
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
     }

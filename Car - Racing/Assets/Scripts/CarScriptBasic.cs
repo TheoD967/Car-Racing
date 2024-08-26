@@ -25,6 +25,7 @@ public class CarScriptBasic : MonoBehaviour
     private bool finalCheck = false;
     private float Starttime;
     private float ElapsedTime;
+    public Camera finishCam;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,7 @@ public class CarScriptBasic : MonoBehaviour
             Quaternion newRotaion = rigidBody.rotation * Quaternion.Euler(0f, 180f, 0f); ;
             rigidBody.MoveRotation(newRotaion);
         }
-
+        finishCam.enabled = false;
 
     }
     private void OnTriggerEnter(Collider other)
@@ -45,13 +46,14 @@ public class CarScriptBasic : MonoBehaviour
             if (laps == 0)
             {
                 Starttime = Time.time;
-
+                laps++;
             }
             else
             {
-                if (finalCheck == true)
-                    laps++;
+            if (finalCheck == true) { 
+                laps++;
                 Debug.Log(TrackMenuManager.Laps + 1);
+            }
             }
 
             if (laps == (TrackMenuManager.Laps + 1))
@@ -59,6 +61,7 @@ public class CarScriptBasic : MonoBehaviour
                 ElapsedTime = Time.time - Starttime;
                 Debug.Log(ElapsedTime);
                 laps++;
+                finishCam.enabled = true;
             }
 
             Debug.Log(laps);
@@ -68,6 +71,7 @@ public class CarScriptBasic : MonoBehaviour
         if (other.name == "final checkpoint")
         {
             finalCheck = true;
+
         }
     }
 
@@ -80,7 +84,8 @@ public class CarScriptBasic : MonoBehaviour
 
         float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.velocity);
 
-        speed = (float)Math.Round(forwardSpeed * (float)3.6);
+        speed = (float)Math.Round(rigidBody.velocity.magnitude * (float)3.6);
+        speed = (float)Math.Round(rigidBody.velocity.magnitude * (float)3.6);
 
         speedDisplay.text = speed.ToString();
 
