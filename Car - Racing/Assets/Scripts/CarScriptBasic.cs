@@ -21,7 +21,7 @@ public class CarScriptBasic : MonoBehaviour
     public TMP_Text speedDisplay;
     private float speed;
     private float backwards = 1;
-    private float laps = 0;
+    private float laps = 1;
     private bool finalCheck = false;
     private float Starttime;
     private float ElapsedTime;
@@ -46,7 +46,7 @@ public class CarScriptBasic : MonoBehaviour
             if (laps == 0)
             {
                 Starttime = Time.time;
-                laps++;
+                
             }
             else
             {
@@ -120,7 +120,7 @@ public class CarScriptBasic : MonoBehaviour
 
         // 
         float currentSteerAngle;
-        currentSteerAngle = 13 * horizontalInput;
+        currentSteerAngle = 14 * horizontalInput;
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
     }

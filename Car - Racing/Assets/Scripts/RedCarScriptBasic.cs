@@ -21,7 +21,7 @@ public class RedCarScriptBasic : MonoBehaviour
     public Quaternion quaternion;
     public Rigidbody rigidBody;
     private float backwards = 1;
-    private float laps = 0;
+    private float laps = 1;
     private bool finalCheck = false;
     private float Starttime;
     private float ElapsedTime;
@@ -73,7 +73,9 @@ public class RedCarScriptBasic : MonoBehaviour
     {
         backwards = 1;
         horizontalInput = Input.GetAxis("Car2h");
-        verticalInput = -Input.GetAxis("Car2v");
+        verticalInput = Input.GetAxis("Car2v");
+
+        
 
         float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.velocity);
 
@@ -85,6 +87,7 @@ public class RedCarScriptBasic : MonoBehaviour
         // as a number from zero to one
         float speedFactor = Mathf.InverseLerp(0, maxSpeed, forwardSpeed - 5);
 
+
         // Use that to calculate how much torque is available 
         // (zero torque at top speed)
         float currentMotorTorque = Mathf.Lerp(motorForce, 0, speedFactor);
@@ -93,10 +96,16 @@ public class RedCarScriptBasic : MonoBehaviour
         
         isBreaking = Input.GetKey(KeyCode.Space);
 
-        if (forwardSpeed > 1 && verticalInput > 0)
+        if (forwardSpeed > 1 && verticalInput < 0)
         {
             isBreaking = true;
             backwards = 0;
+        }
+        else
+        {
+            if (forwardSpeed < 1 && verticalInput < 0) {
+                backwards = (float)0.2;
+            }
         }
             
         
