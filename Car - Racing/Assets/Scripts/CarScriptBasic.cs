@@ -26,6 +26,7 @@ public class CarScriptBasic : MonoBehaviour
     private float Starttime;
     private float ElapsedTime;
     public Camera finishCam;
+    public static bool BlueFinished = false;
 
     // Start is called before the first frame update
     void Start()
@@ -60,8 +61,9 @@ public class CarScriptBasic : MonoBehaviour
             {
                 ElapsedTime = Time.time - Starttime;
                 Debug.Log(ElapsedTime);
-                laps++;
+               
                 finishCam.enabled = true;
+                BlueFinished = false;
             }
 
             Debug.Log(laps);

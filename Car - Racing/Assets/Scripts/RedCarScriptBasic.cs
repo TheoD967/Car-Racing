@@ -25,6 +25,8 @@ public class RedCarScriptBasic : MonoBehaviour
     private bool finalCheck = false;
     private float Starttime;
     private float ElapsedTime;
+    public Camera finishCam;
+    public static bool RedFinished = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,8 +35,9 @@ public class RedCarScriptBasic : MonoBehaviour
         {
             Quaternion newRotaion = rigidBody.rotation* Quaternion.Euler(0f, 180f, 0f); ;
             rigidBody.MoveRotation(newRotaion);
+            
         }
-        
+        finishCam.enabled = false;
 
     }
     private void OnTriggerEnter(Collider other)
@@ -56,7 +59,8 @@ public class RedCarScriptBasic : MonoBehaviour
             if (laps == (TrackMenuManager.Laps+1)) {
                 ElapsedTime = Time.time - Starttime;
                 Debug.Log(ElapsedTime);
-                laps++;
+                finishCam.enabled = true;
+                RedFinished = true;
             }    
             
             Debug.Log(laps);
