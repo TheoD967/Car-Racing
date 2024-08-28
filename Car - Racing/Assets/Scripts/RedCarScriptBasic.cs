@@ -24,7 +24,7 @@ public class RedCarScriptBasic : MonoBehaviour
     private float laps = 1;
     private bool finalCheck = false;
     private float Starttime;
-    private float ElapsedTime;
+    public static float ElapsedTime;
     public Camera finishCam;
     public static bool RedFinished = false;
 

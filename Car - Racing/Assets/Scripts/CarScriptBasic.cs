@@ -24,7 +24,7 @@ public class CarScriptBasic : MonoBehaviour
     private float laps = 1;
     private bool finalCheck = false;
     private float Starttime;
-    private float ElapsedTime;
+    public static float ElapsedTime;
     public Camera finishCam;
     public static bool BlueFinished = false;
 
@@ -63,7 +63,7 @@ public class CarScriptBasic : MonoBehaviour
                 Debug.Log(ElapsedTime);
                
                 finishCam.enabled = true;
-                BlueFinished = false;
+                BlueFinished = true;
             }
 
             Debug.Log(laps);
@@ -107,6 +107,13 @@ public class CarScriptBasic : MonoBehaviour
         {
             isBreaking = true;
             backwards = 0;
+        }
+        else
+        {
+            if (forwardSpeed < 1 && verticalInput < 0)
+            {
+                backwards = (float)0.2;
+            }
         }
 
 
