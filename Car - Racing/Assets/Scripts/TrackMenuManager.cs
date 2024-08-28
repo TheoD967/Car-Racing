@@ -27,6 +27,10 @@ public class TrackMenuManager : MonoBehaviour
             {
                 button = 0;
             }
+            if (Laps ==10 && button ==1)
+            {
+                button = 0;
+            }
             Laps += button;
         }
         Debug.Log(Laps);
