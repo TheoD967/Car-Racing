@@ -6,10 +6,10 @@ public class BarrierManager : MonoBehaviour
 {
     public List<GameObject> barriers = new List<GameObject>();
 
-    private int[] trackOne = { 0, 1, 2, 3, 4, 5 };
-    private int[] trackTwo = { 0, 1, 6, 7, 5 };
-    private int[] trackThree = { 1, 6, 9, 12, 13, 14, 16, 17 };
-    private int[] trackFour = { 18, 6, 7, 8, 9, 10, 11 };
+    private int[] trackOne = { 0, 1, 2, 3, 4, 5, 19, 20 };
+    private int[] trackTwo = { 0, 1, 6, 7, 5, 19, 20, 22 };
+    private int[] trackThree = { 1, 6, 9, 12, 13, 14, 16, 17, 20, 21 };
+    private int[] trackFour = { 18, 6, 7, 8, 9, 10, 11, 19 };
     private int[] trackBarriers;
 
     // Start is called before the first frame update
