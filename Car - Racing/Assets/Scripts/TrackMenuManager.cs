@@ -41,4 +41,9 @@ public class TrackMenuManager : MonoBehaviour
     {
         isReverse = reverseBtn;
     }
+
+    public void again()
+    {
+        SceneManager.LoadScene("Track Picker");
+    }
 }

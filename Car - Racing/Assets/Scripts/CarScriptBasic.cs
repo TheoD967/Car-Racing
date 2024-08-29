@@ -46,6 +46,8 @@ public class CarScriptBasic : MonoBehaviour
         {
             if (laps == 0)
             {
+                lapCountText.enabled = true;
+                speedDisplay.enabled = true;
                 Starttime = Time.time;
                 
             }
@@ -64,6 +66,8 @@ public class CarScriptBasic : MonoBehaviour
                
                 finishCam.enabled = true;
                 BlueFinished = true;
+                lapCountText.enabled = false;
+                speedDisplay.enabled = false;
             }
 
             Debug.Log(laps);
@@ -80,13 +84,15 @@ public class CarScriptBasic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isBreaking = false;
+
         backwards = 1;
         horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = -Input.GetAxis("Vertical");
+        verticalInput = Input.GetAxis("Vertical");
+
 
         float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.velocity);
 
-        speed = (float)Math.Round(rigidBody.velocity.magnitude * (float)3.6);
         speed = (float)Math.Round(rigidBody.velocity.magnitude * (float)3.6);
 
         speedDisplay.text = speed.ToString();
@@ -95,28 +101,24 @@ public class CarScriptBasic : MonoBehaviour
         // as a number from zero to one
         float speedFactor = Mathf.InverseLerp(0, maxSpeed, forwardSpeed - 5);
 
+
         // Use that to calculate how much torque is available 
         // (zero torque at top speed)
         float currentMotorTorque = Mathf.Lerp(motorForce, 0, speedFactor);
 
 
-
-        isBreaking = Input.GetKey(KeyCode.Space);
-
-        if (forwardSpeed > 1 && verticalInput > 0)
+        if (forwardSpeed < 1 && verticalInput < 0)
         {
-            isBreaking = true;
-            backwards = 0;
+            backwards = (float)0.2;
         }
         else
         {
-            if (forwardSpeed < 1 && verticalInput < 0)
+            if (forwardSpeed > 1 && verticalInput < 0)
             {
-                backwards = (float)0.2;
+                isBreaking = true;
+                backwards = 0;
             }
         }
-
-
 
 
         currentbreakForce = isBreaking ? breakForce : 0f;
@@ -132,5 +134,17 @@ public class CarScriptBasic : MonoBehaviour
         currentSteerAngle = 14 * horizontalInput;
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
+        if (Vector3.Dot(transform.up, Vector3.down) > 0.5f)
+        {
+            StartCoroutine(DelayedFlip());
+        }
+    }
+
+
+IEnumerator DelayedFlip()
+    {
+        yield return new WaitForSeconds(2);
+        transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
+        yield break;
     }
 }

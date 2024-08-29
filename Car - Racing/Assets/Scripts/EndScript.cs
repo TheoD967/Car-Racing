@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class EndScript : MonoBehaviour
 {
@@ -24,7 +25,10 @@ public class EndScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+
     {
+        standingsUI.enabled = false;
+        podiumCam.enabled = false;
         if (RedCarScriptBasic.RedFinished == true && CarScriptBasic.BlueFinished == true) {
             podiumCam.enabled = true;
             standingsUI.enabled = true;
@@ -48,5 +52,13 @@ public class EndScript : MonoBehaviour
             }
 
         }
+    }
+    public void again()
+    {
+        SceneManager.LoadScene("Track Picker");
+        standingsUI.enabled = false;
+        podiumCam.enabled = false;
+        CarScriptBasic.BlueFinished = false;
+        RedCarScriptBasic.RedFinished = false;
     }
 }

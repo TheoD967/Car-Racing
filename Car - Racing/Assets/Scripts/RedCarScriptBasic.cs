@@ -48,6 +48,8 @@ public class RedCarScriptBasic : MonoBehaviour
             
             if (laps == 0) {
                 Starttime = Time.time;
+                lapCountText.enabled = true;
+                speedDisplay.enabled = true;
 
             }
             else { 
@@ -61,6 +63,8 @@ public class RedCarScriptBasic : MonoBehaviour
                 Debug.Log(ElapsedTime);
                 finishCam.enabled = true;
                 RedFinished = true;
+                lapCountText.enabled = false;
+                speedDisplay.enabled = false;
             }    
             
             Debug.Log(laps);
@@ -75,11 +79,11 @@ public class RedCarScriptBasic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isBreaking = false;
         backwards = 1;
         horizontalInput = Input.GetAxis("Car2h");
         verticalInput = Input.GetAxis("Car2v");
 
-        
 
         float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.velocity);
 
@@ -97,22 +101,19 @@ public class RedCarScriptBasic : MonoBehaviour
         float currentMotorTorque = Mathf.Lerp(motorForce, 0, speedFactor);
 
 
-        
-        isBreaking = Input.GetKey(KeyCode.Space);
 
-        if (forwardSpeed > 1 && verticalInput < 0)
+        if (forwardSpeed < 1 && verticalInput < 0)
         {
-            isBreaking = true;
-            backwards = 0;
+            backwards = (float)0.2;
         }
         else
         {
-            if (forwardSpeed < 1 && verticalInput < 0) {
-                backwards = (float)0.2;
+            if (forwardSpeed > 1 && verticalInput < 0)
+            {
+                isBreaking = true;
+                backwards = 0;
             }
         }
-            
-        
 
 
         currentbreakForce = isBreaking ? breakForce : 0f;
@@ -128,5 +129,16 @@ public class RedCarScriptBasic : MonoBehaviour
         currentSteerAngle = 14 * horizontalInput;
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
+        if (Vector3.Dot(transform.up, Vector3.down) > 0.5f)
+        {
+            StartCoroutine(DelayedFlip());
+        }
     }
+    IEnumerator DelayedFlip()
+    {
+        yield return new WaitForSeconds(2);
+        transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
+        yield break;
+    }
+
 }
